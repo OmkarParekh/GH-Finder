@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+       
+        <nav class="navbar navbar-dark bg-dark">
+                <div class="container">
+                <a class="navbar-brand" href="#">GH Finder</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="index1.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    
+                  
+                </div>
+            </div>
+              </nav>
+        
+              <br>
+              <div class="container">
+                    <input type="text" class="form-control input" id="id" placeholder="User name"><br><br>
+                    <button id="button1" class="btn btn-dark" onclick="fun()">Search</button>
+            
+                    <div  id="cols"></div>
+                </div>
+      </div>
+      <div id="para" >
+
+      </div>
+    <script>
+      function fun(){
+
+        const client_id = "a44a7a367a5850279eab";
+        const client_secret = "89e45346fdf2848ab3d434bb1a669f86e1604b5c";
+        const xhr = new XMLHttpRequest();
+        const user=document.getElementById("id").value;
+
+if(user=="")      
+{alert("plz Enter Username")}  
+else{
+
+
+    xhr.open("GET", `https://api.github.com/users/${user}?client_id=${client_id}&client_secret=${client_secret}`, true)
+xhr.onload = () => {
+    if(xhr.status == 200){  //Status 200 = ok
+
+
+        console.log(JSON.parse(xhr.responseText));
+        // console.log(xhr.responseText);
+       
+         let users =  JSON.parse(xhr.responseText);
+
+         document.getElementById("para").innerHTML=`
+                    <ul>
+                            
+                            <div class="container">
+                            <div class="card" style="width: 25rem;">
+                            <img src=${users.avatar_url}  class="card-img-top" alt="${users.login}">
+                            </div>
+                        
+
+                             <div class="card-body">
+                            <p class="card-text">
+                            <label><li>ID: ${users.login}</li></label><br>
+                            <label><li>Followers: ${users.followers}</li></label><br>
+                            <label><li>Followers: ${users.following}</li></label>
+                             </div>
+                             </div>
+                                                        
+
+                    </ul>
+                    `;
+       
+
+    
+    }
+}
+xhr.send();
+      }
+    
+}
+
+        
+    </script>
+</body>
+</html>
